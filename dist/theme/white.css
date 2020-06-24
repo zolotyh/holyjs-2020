@@ -4,55 +4,55 @@
  * By Hakim El Hattab, http://hakim.se
  */
 @import url(fonts/source-sans-pro/source-sans-pro.css);
-section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
-  color: #fff; }
+section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
+  color: #0f0f0f; }
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 :root {
-  --background-color: #fff;
-  --main-font: Source Sans Pro, Helvetica, sans-serif;
+  --background-color: linear-gradient(315deg, #485461 0%, #28313b 74%);
+  --main-font: Raleway, Helvetica, sans-serif;
   --main-font-size: 42px;
-  --main-color: #222;
+  --main-color: #fefefe;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: Source Sans Pro, Helvetica, sans-serif;
-  --heading-color: #222;
+  --heading-font: Raleway, Helvetica, sans-serif;
+  --heading-color: #fafafa;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
   --heading-text-transform: uppercase;
   --heading-text-shadow: none;
-  --heading-font-weight: 600;
+  --heading-font-weight: 900;
   --heading1-text-shadow: none;
-  --heading1-size: 2.5em;
+  --heading1-size: 2em;
   --heading2-size: 1.6em;
   --heading3-size: 1.3em;
   --heading4-size: 1em;
   --code-font: monospace;
-  --link-color: #2a76dd;
-  --link-color-hover: #6ca0e8;
-  --selection-background-color: #98bdef;
+  --link-color: #fefefe;
+  --link-color-hover: white;
+  --selection-background-color: white;
   --selection-color: #fff; }
 
 .reveal-viewport {
-  background: #fff;
-  background-color: #fff; }
+  background: linear-gradient(315deg, #485461 0%, #28313b 74%);
+  background-color: linear-gradient(315deg, #485461 0%, #28313b 74%); }
 
 .reveal {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: "Raleway", Helvetica, sans-serif;
   font-size: 42px;
-  font-weight: normal;
-  color: #222; }
+  font-weight: 300;
+  color: #fefefe; }
 
 .reveal ::selection {
   color: #fff;
-  background: #98bdef;
+  background: white;
   text-shadow: none; }
 
 .reveal ::-moz-selection {
   color: #fff;
-  background: #98bdef;
+  background: white;
   text-shadow: none; }
 
 .reveal .slides section,
@@ -70,9 +70,9 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #222;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-  font-weight: 600;
+  color: #fafafa;
+  font-family: "Raleway", Helvetica, sans-serif;
+  font-weight: 900;
   line-height: 1.2;
   letter-spacing: normal;
   text-transform: uppercase;
@@ -80,7 +80,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 2.5em; }
+  font-size: 2em; }
 
 .reveal h2 {
   font-size: 1.6em; }
@@ -152,10 +152,13 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   position: relative;
   width: 70%;
   margin: 20px auto;
-  padding: 5px;
-  font-style: italic;
+  padding: 2ex 1em;
+  border-radius: 3px;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+  .reveal blockquote > footer {
+    font-size: 0.5em;
+    font-weight: bold; }
 
 .reveal blockquote p:first-child,
 .reveal blockquote p:last-child {
@@ -174,6 +177,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
+  border-radius: 3px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
@@ -182,7 +186,8 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal pre code {
   display: block;
-  padding: 5px;
+  padding: 1em 2ex;
+  border-radius: 3px;
   overflow: auto;
   max-height: 400px;
   word-wrap: normal; }
@@ -237,49 +242,49 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  * LINKS
  *********************************************/
 .reveal a {
-  color: #2a76dd;
+  color: #fefefe;
   text-decoration: none;
   transition: color .15s ease; }
 
 .reveal a:hover {
-  color: #6ca0e8;
+  color: white;
   text-shadow: none;
   border: none; }
 
 .reveal .roll span:after {
   color: #fff;
-  background: #1a53a1; }
+  background: #d8d8d8; }
 
 /*********************************************
  * Frame helper
  *********************************************/
 .reveal .r-frame {
-  border: 4px solid #222;
+  border: 4px solid #fefefe;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal a .r-frame {
   transition: all .15s linear; }
 
 .reveal a:hover .r-frame {
-  border-color: #2a76dd;
+  border-color: #fefefe;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
  * NAVIGATION CONTROLS
  *********************************************/
 .reveal .controls {
-  color: #2a76dd; }
+  color: #fefefe; }
 
 /*********************************************
  * PROGRESS BAR
  *********************************************/
 .reveal .progress {
   background: rgba(0, 0, 0, 0.2);
-  color: #2a76dd; }
+  color: #fefefe; }
 
 /*********************************************
  * PRINT BACKGROUND
  *********************************************/
 @media print {
   .backgrounds {
-    background-color: #fff; } }
+    background-color: linear-gradient(315deg, #485461 0%, #28313b 74%); } }

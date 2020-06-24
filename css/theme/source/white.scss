@@ -16,30 +16,30 @@
 
 
 // Override theme settings (see ../template/settings.scss)
-$backgroundColor: #fff;
+$backgroundColor: linear-gradient(315deg, #485461 0%, #28313b 74%);
 
-$mainColor: #222;
-$headingColor: #222;
+$mainColor: #fefefe;
+$headingColor: #fafafa;
 
 $mainFontSize: 42px;
-$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
-$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
+$mainFont: 'Raleway', Helvetica, sans-serif;
+$headingFont: 'Raleway', Helvetica, sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;
-$headingFontWeight: 600;
-$linkColor: #2a76dd;
+$headingFontWeight: 900;
+$linkColor: #fefefe;
 $linkColorHover: lighten( $linkColor, 15% );
 $selectionBackgroundColor: lighten( $linkColor, 25% );
 
-$heading1Size: 2.5em;
+$heading1Size: 2.0em;
 $heading2Size: 1.6em;
 $heading3Size: 1.3em;
 $heading4Size: 1.0em;
 
-section.has-dark-background {
+section.has-light-background {
 	&, h1, h2, h3, h4, h5, h6 {
-		color: #fff;
+		color: #0f0f0f;
 	}
 }
 

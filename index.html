@@ -1,40 +1,704 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
 
-		<title>reveal.js</title>
+        <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+        <link rel="stylesheet" href="dist/reset.css" />
+        <link rel="stylesheet" href="dist/reveal.css" />
+        <link rel="stylesheet" href="dist/theme/white.css" id="theme" />
+        <link rel="stylesheet" href="fonts/fonts.css" id="theme" />
+        <link rel="stylesheet" href="css/animate.min.css" id="theme2" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+        <!-- Theme used for syntax highlighted code -->
+        <link
+            rel="stylesheet"
+            href="plugin/highlight/github-gist.css"
+            id="highlight-theme"
+        />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section style="text-align: center;">
+                    <h1 style="text-align: left; display: inline-block;">
+                        Решения, <br />
+                        которые мы принимаем
+                    </h1>
+                    <p>Личный взгляд на архитектуру</p>
+                </section>
+                <section>
+                    <h3>
+                        Алексей Золотых
+                    </h3>
+                    <table>
+                        <tr>
+                            <td>twitter</td>
+                            <td>@zolotyh</td>
+                        </tr>
+                        <tr>
+                            <td>github</td>
+                            <td>@zolotyh</td>
+                        </tr>
+                        <tr>
+                            <td>telegram</td>
+                            <td>@aazolotyh</td>
+                        </tr>
+                    </table>
+                </section>
+                <section>
+                    <img src="img/infobip.svg" alt="" />
+                </section>
+                <section>
+                    <p>Веду тренинги, консультирую</p>
+                    <img src="img/graphql.png" width="50%" alt="" />
+                </section>
+                <section data-background-color="#ffffff">
+                    <p>Работаю в ПК</p>
+                    <img src="img/holy.svg" height="400px" alt="" />
+                </section>
+                <section>
+                    Архитектура
+                </section>
+                <section>
+                    <blockquote>
+                        <p>
+                            Architecture represents the significant design
+                            decisions that shape a system, where significant is
+                            measured by cost of change
+                        </p>
+                        <footer>
+                            <p>
+                                Grady Booch
+                            </p>
+                        </footer>
+                    </blockquote>
+                </section>
+                <section>
+                    <h2>Гибкость противоречит простоте</h2>
+                    <p>про DRY, KISS, YAGNI</p>
+                </section>
+                <section>
+                    Я у мамы оверинженер
+                </section>
+                <section data-transition="slide none">
+                    <pre><code class="javascript" data-trim data-noescape>
+// simple function
+function add(x, y){
+  return x + y;
+}
+                    </code></pre>
+                </section>
+                <section data-transition="none">
+                    <pre><code data-trim data-noescape>
+// Check that arguments are numbers
+function add(x,y){
+  <mark>if(typeof x !== 'number' || typeof y !== 'number'){
+    throw new Error('can\'t summ not a number');
+  }</mark>
+  return x + y;
+}
+                    </code></pre>
+                </section>
+                <section data-transition="none">
+                    <pre><code data-trim data-noescape>
+// Check that arguments are numbers
+function add(x,y){
+ <mark>const parsedX = parseFloat(x,10);
+ const parsedY = parseFloat(y,10);</mark>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+  if(Number.isNaN(parsedX) || Number.isNaN(parsedY)){
+    throw new Error('can\'t summ not a number');
+  }
+  return x + y;
+}
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+                    </code></pre>
+                </section>
+                <section data-transition="none slide">
+                    <pre><code data-trim data-noescape>
+// Check that arguments are numbers
+function add(x,y){
+ <mark>const parsedX = parseFloat(x,10);
+ const parsedY = parseFloat(y,10);</mark>
+
+  if(<mark>Number.isNaN(parsedX)</mark> || <mark>Number.isNaN(parsedY)</mark>){
+    throw new Error('can\'t summ not a number');
+  }
+  return x + y;
+}
+                    </code></pre>
+                </section>
+                <section>
+                    Number.MAX_VALUE?
+                </section>
+                <section>
+                    Что если аргументов будет 5?
+                </section>
+                <section>
+                    <pre><code data-trim data-noescape>
+                    console.log(add(10, 20));<span class="fragment">// 30???</span>
+                    </code></pre>
+                </section>
+                <section data-transition="slide none">
+                    <pre><code class="html" data-trim data-noescape>
+&lt;div className="ib-checkbox"&gt;
+    &lt;input type="checkbox" className="ib-checkbox--input"&gt;
+&lt;/div&gt;
+                    </code></pre>
+                </section>
+                <section data-transition="slide none">
+                    <pre><code class="html" data-trim data-noescape>
+&lt;div className="<mark>ib-checkbox</mark>"&gt;
+    &lt;input type="checkbox" className="<mark>ib-checkbox</mark>--input"&gt;
+&lt;/div&gt;
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim>
+function bemClass(block: string) {
+    return (element?: string, mods?: object): string =&gt; {
+        if (!element) { return block; }
+        const result = [getElementClass(block, element)];
+        if (mods) {
+            forEach(mods, (needAdd, mod) =&gt; {
+                if (!needAdd) { return; }
+                result.push(getElementClass(block, element, mod));
+            });
+        }
+        return result.join(' ');
+    };
+}
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim data-noescape>
+<mark>const bem = bemClass('checkbox');</mark>
+
+export default () =&gt; (
+  &lt;div class={<mark>bem()</mark>}&gt;
+    &lt;input type="checkbox" className={<mark>bem('input')</mark>}&gt;
+  &lt;/div&gt;
+)
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code class="jsx" data-trim data-noescape>
+const bem = bemClass('checkbox');
+
+export default () =&gt; (
+  &lt;div class={bem()}&gt;
+    &lt;input className={classnames({
+        [bem('input')]: true,
+        [bem('input', ['checked'])]: this.props.checked
+        })}&gt;
+  &lt;/div&gt;
+)
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code class="jsx" data-trim data-noescape>
+const bem = bemClass('checkbox');
+
+const className = classnames({
+  [bem('input')]: true,
+  [bem('input', ['checked'])]: this.props.checked
+})
+                    </code></pre>
+                </section>
+                <section data-transition="slide none">
+                    <pre><code class="javascript" data-trim data-noescape>
+  const  className = `ib_checkbox--input
+  ${checked ? 'ib_checkbox--input__checked': ''}`
+                    </code></pre>
+                </section>
+                <section>
+                    Есть DRY<span class="fragment">, но еще есть KISS</span>
+                </section>
+                <section>
+                    Гибкость VS Сложность
+                </section>
+
+                <section>
+                    Самый гибкий фреймворк &mdash; язык программирования
+                </section>
+                <section data-transition="none">
+                    Хорошая архитектура
+                    <br />должна быть гибкой
+                </section>
+                <section data-transition="none">
+                    Хорошая архитектура <br /><strike>должна</strike> может быть
+                    гибкой
+                </section>
+                <section>
+                    <p>
+                        Clean Architecture: A Craftsman's Guide to Software
+                        Structure and Design
+                    </p>
+                    <img src="img/clean.jpg" height="300px" alt="" />
+                    <p>
+                        <a
+                            href="https://www.amazon.com/gp/product/B075LRM681/ref=dbs_a_def_rwt_hsch_vapi_tkin_p1_i1"
+                            target="_blank"
+                            >amzn.to/2VchFIp</a
+                        >
+                    </p>
+                </section>
+                <section>
+                    <h2>Как мы программируем</h2>
+                    <p class="fragment">Программирование = принятие решений</p>
+                </section>
+                <section>
+                    <blockquote>
+                        <p>
+                            There are only two hard things in Computer Science:
+                            cache invalidation and naming things
+                        </p>
+                        <footer>
+                            <cite title="Phil Karlton">Phil Karlton</cite>
+                        </footer>
+                    </blockquote>
+                </section>
+                <section>
+                    <p>
+                        Решим часть самой важной проблемы
+                    </p>
+                </section>
+                <section data-auto-animate>
+                    <h4>Название переменной</h4>
+                    <pre><code data-noescape data-trim class="text">
+<span>currentConference  = 'HolyJS'</span><span class="fragment" data-fragment-index=4>// javascript (const or let)</span>
+<span class="fragment" data-fragment-index=2>current_conference = 'HolyJS'</span><span class="fragment" data-fragment-index=5># python</span>
+<span class="fragment" data-fragment-index=3>sCurrentConference = 'HolyJS'</span><span class="fragment" data-fragment-index=6>// Hungarian notation</span>
+                </code></pre>
+                </section>
+                <style type="text/css" media="screen">
+                    .a2 h4 span {
+                        -webkit-animation-fill-mode: none;
+                        animation-fill-mode: none;
+                        display: inline-block;
+                        font-size: 4em;
+                        vertical-align: middle;
+                        transform: rotate(5deg);
+                        margin-top: -0.2em;
+                    }
+                    .future.a2 h4 span {
+                        animation: none;
+                    }
+                    .present.a2 h4 span {
+                        -webkit-animation-duration: 5s;
+                        animation-duration: 1s;
+                        -webkit-animation-duration: var(--animate-duration);
+                        animation-duration: var(--animate-duration);
+                        -webkit-animation-fill-mode: both;
+                        animation-fill-mode: both;
+                    }
+                </style>
+                <section class="a2">
+                    <h4>
+                        Название переменной
+                        <span class="animate__zoomInDown">2</span>
+                    </h4>
+                    <pre><code data-noescape data-trim class="text">
+<span>currentConference  = 'HolyJS'</span>
+<span class="fragment">activeConference = 'HolyJS'</span>
+<span class="fragment">currentEvent = 'HolyJS'</span></code></pre>
+                </section>
+                <style type="text/css" media="screen">
+                    .future .phone {
+                        animation: none;
+                    }
+                    .present .phone {
+                        -webkit-animation-duration: 0.5s;
+                        animation-duration: 0.5s;
+                        -webkit-animation-duration: var(--animate-duration);
+                        animation-duration: var(--animate-duration);
+                        -webkit-animation-fill-mode: both;
+                        animation-fill-mode: both;
+                    }
+                    .phone {
+                        transform: scale(0.7);
+                        margin: 0 auto;
+                        width: 434px;
+                        height: 942px;
+                        background-image: url(img/Gold.svg);
+                        background-repeat: no-repeat;
+                        background-size: 434px auto;
+                        position: relative;
+                    }
+                    .screencapture {
+                        width: 380px;
+                        height: 765px;
+                        position: absolute;
+                        left: 27px;
+                        top: 99px;
+                    }
+                    .screencapture img {
+                        margin: 0;
+                        width: 380px;
+                        max-width: none;
+                    }
+                </style>
+                <section data-transition="fade">
+                    <p>Infobip Moments</p>
+                    <div class="phone animate__animated animate__slideInUp">
+                        <div class="screencapture">
+                            <img src="img/iphone.gif" />
+                        </div>
+                    </div>
+                </section>
+                <section data-transition="fadeIn zoomOut">
+                    <img src="img/f2.png" alt="" />
+                </section>
+                <section data-transition="none">
+                    <img src="img/Create_Flow_1.png" alt="" />
+                </section>
+                <section data-transition="none">
+                    <img src="img/Create_Flow_2.png" alt="" />
+                </section>
+                <section>
+                    <img src="img/Create_Flow.png" alt="" />
+                </section>
+                <section>
+                    <h4>CSS</h4>
+                    <pre><code data-trim>
+                        .b-user-profile {
+                            ...
+                        }
+                    </code></pre>
+                </section>
+                <section>
+                    <h4>Rest</h4>
+                    <p>/api/users/1/profile</p>
+                </section>
+                <section data-transition="fadeIn none">
+                    <img src="img/f2.png" alt="" />
+                </section>
+                <section data-transition="fadeIn slideOut">
+                    <img src="img/f1.png" alt="" />
+                </section>
+                <section>
+                    Ubiquitous Language и Bounded Context в DDD
+                </section>
+                <section>
+                    Ubiquitous Language &mdash; единый язык
+                </section>
+                <section>
+                    Bounded Context &mdash; контекст предметной области
+                </section>
+                <section>
+                    DDD &mdash; Domain-Driven Design
+                </section>
+                <section>
+                    <p>
+                        Domain-Driven Design: Tackling Complexity in the Heart
+                        of Software
+                    </p>
+                    <img src="img/ddd2.webp" alt="" />
+                    <p>
+                        <a href="https://amzn.to/2YsYJH7">amzn.to/2YsYJH7</a>
+                    </p>
+                </section>
+                <section>
+                    <blockquote>
+                        <p>
+                            <b
+                                >Domain-Driven Design: Tackling Complexity in
+                                the Heart of Software</b
+                            >
+                            &mdash; лучшая книга о проектировании действительно
+                            больших enterprise-приложений, что я читал
+                        </p>
+                        <footer>
+                            <cite
+                                ><a
+                                    href="https://habr.com/ru/post/232881/"
+                                    target="_blank"
+                                    >habr.com/ru/post/232881/</a
+                                ></cite
+                            >
+                        </footer>
+                    </blockquote>
+                </section>
+                <section>
+                    <img src="img/evans.jpg" alt="" />
+                </section>
+                <section>
+                    <p>
+                        Алексей Мерсон — Domain-driven design: рецепт для
+                        прагматика
+                    </p>
+                    <img src="img/ddd3.png" width="500px" alt="" />
+                    <a href="https://www.youtube.com/watch?v=CR9mLGN9jh0"
+                        >youtu.be/CR9mLGN9jh0</a
+                    >
+                </section>
+                <section>
+                    <p>
+                        Implementing Domain-Driven Design
+                    </p>
+                    <img src="img/ddd4.jpg" height="300px" alt="" />
+                    <p>
+                        <a href="https://amzn.to/2NkSsHk">amzn.to/2YsYJH7</a>
+                    </p>
+                </section>
+                <section>
+                    <h2>Вывод</h2>
+                    <p>
+                        Иногда, чтобы называть переменные правильно, нужно
+                        понимать в архитектуру
+                    </p>
+                </section>
+
+                <section>
+                    <h2>
+                        Архитектура и поэзия
+                    </h2>
+                    <p>Построить дом или написать стих</p>
+                </section>
+                <section>
+                    <blockquote>
+                        <p>
+                            В саду горит костер рябины красной, Но никого не
+                            может он согреть.
+                        </p>
+                        <footer>
+                            С Есенин
+                        </footer>
+                    </blockquote>
+                    <p class="fragment">Ох уж эти метафоры</p>
+                </section>
+                <section>
+                    <img src="img/save.svg" alt="" />
+                    <p>Иконки &mdash; тоже иногда метафоры</p>
+                </section>
+                <section>
+                    <p>Metaphors We Live By. George Lakoff and Mark Johnson</p>
+                    <img
+                        height="300px"
+                        src="img/met.jpg"
+                        alt=""
+                        sizes=""
+                        srcset=""
+                    />
+                    <p>
+                        <a href="https://amzn.to/319GwQP" target="_blank"
+                            >amzn.to/319GwQP</a
+                        >
+                    </p>
+                </section>
+                <section>
+                    Архитектура &mdash; метафора на строительство
+                </section>
+                <section>
+                    <h2>
+                        От чего зависит архитектура
+                    </h2>
+                    <ul>
+                        <li class="fragment">
+                            Внешние требования
+                        </li>
+                        <li class="fragment">
+                            Внутренние требования
+                        </li>
+                        <li class="fragment">
+                            Регламенты, стандарты
+                        </li>
+                        <li class="fragment">
+                            Прошлый опыт
+                        </li>
+                        <li class="fragment">
+                            Вопросы доверия и другие человеческие факторы
+                        </li>
+                        <li class="fragment">
+                            Структура команды
+                            <span class="fragment">(Закон Конвея)</span>
+                        </li>
+                        <li class="fragment">
+                            Время, ресурсы
+                        </li>
+                        <li class="fragment">
+                            Законы, корпоративные ограничения
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>
+                        Точки зрения на архитектуру
+                    </h2>
+                    <p>Иногда важное неважно</p>
+                </section>
+                <section>
+                    <img src="" alt="" />
+                </section>
+                <section>
+                    <img src="img/el.jpg" alt="" />
+                </section>
+                <section>
+                    <h2>The Clean Code Blog</h2>
+                    <p>
+                        The Clean Architecture
+                    </p>
+                    <p>
+                        <a
+                            href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html"
+                            target="_blank"
+                            >bit.ly/2NlnfDM</a
+                        >
+                    </p>
+                </section>
+                <section>
+                    <img src="img/CleanArchitecture.jpg" alt="" />
+                </section>
+                <section>
+                    <h2>Cloudflare</h2>
+                    <p>
+                        HTTP Analytics for 6M requests per second using
+                        ClickHouse
+                    </p>
+                    <p>
+                        <a
+                            href="https://blog.cloudflare.com/http-analytics-for-6m-requests-per-second-using-clickhouse/"
+                            >https://bit.ly/3fPOClG</a
+                        >
+                    </p>
+                </section>
+                <section>
+                    <img src="img/Old-system-architecture.jpg" alt="" />
+                </section>
+                <section>
+                    <img src="img/New-system-architecture.jpg" alt="" />
+                </section>
+                <section>
+                    <h2>Яндекс</h2>
+                    <p>Верхнеуровневая архитектура фронтенда</p>
+                    <p>
+                        <a
+                            href="https://habr.com/ru/company/yandex/blog/425611/"
+                            target="_blank"
+                            >bit.ly/3ex25yG</a
+                        >
+                    </p>
+                </section>
+                <section>
+                    <img src="img/flux.jpeg" alt="" />
+                </section>
+                <section>
+                    <h2>Вакансия 1</h2>
+                    <p>Системный архитектор</p>
+                    <ul style="font-size: 0.6em;">
+                        <li>
+                            Глубокое понимание цикла разработки программного
+                            обеспечения и DevOps подходов;
+                        </li>
+                        <li>
+                            Опыт проектирование комплексных распределенных
+                            систем высокой доступности;
+                        </li>
+                        <li>
+                            Опыт работы с облачными решениями: AWS / Azure /
+                            GCP;
+                        </li>
+                        <li>
+                            Опыт автоматизации процессов с использованием
+                            инструментов: Ansible / Chef / SaltStack;
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Вакансия 2</h2>
+                    <p>Системный архитектор</p>
+                    <ul style="font-size: 0.6em;">
+                        <li>
+                            5+ лет опыта промышленной разработки в стеках: Java
+                            / Scala / Python / JavaScript / PHP / Golang
+                        </li>
+                        <li>
+                            Приветствуется опыт работы с AWS и поддержки
+                            облачных решений
+                        </li>
+                        <li>Production опыт как с SQL, так и с NoSQL СУБД</li>
+                        <li>
+                            Хорошее понимание матчасти (алгоритмы/структуры
+                            данных, CAP, ACID, SOLID и тд.)
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    Архитектурные фреймворки
+                    <ul>
+                        <li>4+ 1</li>
+                        <li>Nick Rozanski and Eoin Woods</li>
+                        <li>Zachman</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>
+                        Уровни архитектуры
+                    </h2>
+                    <p>Куда смотреть если смотреть некуда</p>
+                </section>
+                <section>
+                    Нужно ли разбивать компонент?
+                </section>
+                <section>
+                    <table style="font-size: .5em">
+                        <tr>
+                            <td>Business</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Process</td>
+                            <td>Big design up front</td>
+                            <td>YAGNI</td>
+                        </tr>
+                        <tr>
+                            <td>Requirements Model</td>
+                            <td>Меняется</td>
+                            <td>Не меняется</td>
+                        </tr>
+                        <tr>
+                            <td>Desing Model</td>
+                            <td>Гибкость</td>
+                            <td>Простота</td>
+                        </tr>
+                        <tr>
+                            <td>Implementation Model</td>
+                            <td>Выносим</td>
+                            <td>Инлайним</td>
+                        </tr>
+                    </table>
+                </section>
+            </div>
+        </div>
+
+        <script src="dist/reveal.js"></script>
+        <script src="plugin/notes/notes.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
+        <script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/zoom/zoom.js"></script>
+        <script>
+            // More info about initialization & config:
+            // - https://revealjs.com/initialization/
+            // - https://revealjs.com/config/
+            Reveal.initialize({
+                hash: true,
+
+                // Learn about plugins: https://revealjs.com/plugins/
+                plugins: [
+                    RevealMarkdown,
+                    RevealHighlight,
+                    RevealNotes,
+                    RevealZoom
+                ]
+            });
+        </script>
+    </body>
 </html>
